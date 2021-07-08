@@ -200,7 +200,7 @@ void list(FILE *db_file) {
   free_entries(base);
 }
 
-int search(File *db_file, char *name){
+int search(FILE *db_file, char *name){
   int r = 0;
   entry *p = load_entries(db_file);
   entry *base = p;
