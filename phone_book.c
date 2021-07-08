@@ -62,16 +62,17 @@ int main(int argc, char *argv[]) {
     fclose(fp);
     exit(0);
   } else if (strcmp(argv[1], "search") == 0) {  /* Handle search */
-    FILE *fp = open_db_file();
-    if(search(fp, argv[2])==0)
-    {
-      printf("No match found\n");
+      FILE *fp = open_db_file();
+      if(search(fp, argv[2])==0)
+      {
+        printf("no match\n");
+          fclose(fp);
+          exit(1);
+      }
       fclose(fp);
-      exit(1);
-    }
-    fclose(fp);
-    exit(0);
-  } else if (strcmp(argv[1], "delete") == 0) {  /* Handle delete */
+      exit(0);
+  } 
+  else if (strcmp(argv[1], "delete") == 0) {  /* Handle delete */
     if (argc != 3) {
       print_usage("Improper arguments for delete", argv[0]);
       exit(1);
@@ -101,9 +102,9 @@ FILE *open_db_file() {
 }
   
 void free_entries(entry *p) {
- while(p!=NULL){
+ while(p != NULL){
    free(p);
-   p=p->next;
+   p = p->next;
  }
 }
 //TBD
@@ -196,17 +197,17 @@ void list(FILE *db_file) {
     p=p->next;
     c++;
   }
-  printf("Total entries : %d\n",c); //TBD
+  printf("Total entries : %d\n", c); //TBD
   free_entries(base);
 }
 
-int search(FILE *db_file, char *name){
+int search(FILE *db_file, char *term){
   int r = 0;
   entry *p = load_entries(db_file);
   entry *base = p;
   while(p!=NULL){
-    if(strcmp(name,p->name) == 0){
-      printf("%10s\n",p->phone);
+    if(strcmp(term,p->name) == 0){
+      printf("%10s\n", p->phone);
       r++;
      }
      p=p->next;
@@ -226,15 +227,15 @@ int delete(FILE *db_file, char *name) {
   while (p!=NULL) {
     if (strcmp(p->name, name) == 0) {
       deleted  = 1;
-      if(p==base)
-        base=p->next;
+      if(p == base)
+        base=p -> next;
       else
-        prev->next = p->next;
+        prev -> next = p -> next;
           break;
       }
       
       prev = p;
-     p=p->next;
+     p=p -> next;
      
      //TBD
   }
