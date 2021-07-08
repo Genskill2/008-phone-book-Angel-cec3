@@ -104,7 +104,7 @@ FILE *open_db_file() {
 void free_entries(entry *p) {
  while(p != NULL){
    free(p);
-   p = p->next;
+   p = p-> next;
  }
 }
 //TBD
@@ -194,26 +194,26 @@ void list(FILE *db_file) {
   int c = 0;
   while (p!=NULL) {
     printf("%-20s : %10s\n", p->name, p->phone);
-    p=p->next;
+    p = p-> next;
     c++;
   }
-  printf("Total entries : %d\n", c); //TBD
+  printf("Total entries :  %d\n", c); //TBD
   free_entries(base);
 }
 
-int search(FILE *db_file, char *term){
-  int r = 0;
+int search (FILE *db_file, char *sterm){
+  int ret = 0;
   entry *p = load_entries(db_file);
   entry *base = p;
-  while(p!=NULL){
-    if(strcmp(term,p->name) == 0){
+  while (p!=NULL){
+    if (strcmp(sterm,p->name) == 0){
       printf("%10s\n", p->phone);
-      r++;
+      ret++;
      }
      p=p->next;
     }
     free_entries(base);
-    return r;
+    return ret;
    }
 //TBD
 
@@ -226,19 +226,18 @@ int delete(FILE *db_file, char *name) {
   int deleted = 0;
   while (p!=NULL) {
     if (strcmp(p->name, name) == 0) {
-      deleted  = 1;
-      if(p == base)
-        base=p -> next;
+      deleted = 1;
+      if (p == base)
+      	base = p -> next;
       else
-        prev -> next = p -> next;
-          break;
-      }
-      
-      prev = p;
-     p=p -> next;
-     
-     //TBD
+      	prev -> next = p -> next;
+		break;
+    }
+	 prev = p;  
+    p = p -> next;
+    
   }
+  
   write_all_entries(base);
   free_entries(base);
   return deleted;
