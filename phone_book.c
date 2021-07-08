@@ -194,7 +194,7 @@ void list(FILE *db_file) {
   while (p!=NULL) {
     printf("%-20s : %10s\n", p->name, p->phone);
     p=p->next;
-    c++
+    c++;
   }
   printf("Total entries : %d\n",c); //TBD
   free_entries(base);
